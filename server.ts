@@ -1,4 +1,5 @@
-import 'dotenv/config';
+import { config } from 'dotenv';
+config();
 import { serve } from 'bun';
 import app from './app';
 
