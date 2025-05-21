@@ -1,0 +1,38 @@
+import { Hono } from 'hono';
+import { filmSchema } from '../schemas/film_schema.ts';
+import { filmController } from '../controllers/film.controller.ts';
+import { validateBody } from '../middlewares/validate.ts'; // este es el nuevo middleware
+
+const FilmRouter = new Hono();
+
+filmRouter.get('/films', async (): Promise<Response> => {
+    const { status, body } = await filmController.getAll();
+    return new Response(JSON.stringify(body), {
+        status: status,
+        headers: { 'Content-Type': 'application/json' }
+    });
+});
+
+filmRouter.get('/films/:id', async (c) => {
+    const id = Number(c.req.param('id'));
+    const { status, body } = await filmController.getById(id);
+    return new Response(JSON.stringify(body), {
+        status: status,
+        headers: { 'Content-Type': 'application/json' }
+    });
+});
+
+filmRouter.post(
+    '/films',
+    validateBody(filmSchema), // ✅ validación personalizada
+    async (c) => {
+        const bodyValidated = c.get('validatedBody'); // ya está validado
+        const { status, body } = await filmController.add(bodyValidated);
+        return new Response(JSON.stringify(body), {
+            status: status,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+);
+
+export default filmRouter;
