@@ -1,12 +1,12 @@
-import { ActorService } from '../services/actor.service.ts';
+// src/controllers/actor.controller.ts
+import { ActorRepository } from '../repositories/actor.repos.ts';
 import {HttpResponse} from "../utils/http_reponse.ts";
-
 
 export const ActorController = {
     getAll: async () => {
         try {
-            const actors = await ActorService.getAll();
-            return HttpResponse.ok(actors, "Actores recuperados correctamente");
+            const actors = await ActorRepository.findAll();
+            return HttpResponse.ok(actors);
         } catch (error) {
             return HttpResponse.error("Error al recuperar los actores");
         }
@@ -14,22 +14,40 @@ export const ActorController = {
 
     getById: async (id: number) => {
         try {
-            const actor = await ActorService.getById(id);
-            if (!actor) {
-                return HttpResponse.notFound("Actor no encontrado");
-            }
-            return HttpResponse.ok([actor], "Actor encontrado");
+            const actor = await ActorRepository.findById(id);
+            if (!actor) return HttpResponse.notFound('Actor no encontrado');
+            return HttpResponse.ok(actor);
         } catch (error) {
-            return HttpResponse.error("Error al recuperar el actor");
+            return HttpResponse.error('Actor no encontrado');
         }
     },
 
-    add: async (body: { first_name: string; last_name: string }) => {
+    create: async (data: { first_name: string; last_name: string }) => {
         try {
-            const newActor = await ActorService.add(body.first_name, body.last_name);
-            return HttpResponse.created(newActor, "Actor creado");
+            const actor = await ActorRepository.create(data);
+            return HttpResponse.created(actor);
         } catch (error) {
-            return HttpResponse.error("Error al crear el actor");
+            return HttpResponse.error('Actor no creado');
         }
     },
+
+    update: async (id: number, data: Partial<{ first_name: string; last_name: string }>) => {
+        try {
+            const actor = await ActorRepository.update(id, data);
+            if (!actor) return HttpResponse.notFound('Actor no encontrado');
+            return HttpResponse.ok(actor);
+        } catch (error) {
+            return HttpResponse.error('Actor no encontrado');
+        }
+    },
+
+    delete: async (id: number) => {
+        try {
+            const actor = await ActorRepository.delete(id);
+            if (!actor) return HttpResponse.notFound('Actor no encontrado');
+            return HttpResponse.ok(actor);
+        } catch (error) {
+            return HttpResponse.error('Actor no encontrado');
+        }
+    }
 };

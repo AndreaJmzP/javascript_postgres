@@ -27,12 +27,32 @@ actorRouter.post(
     validateBody(actorSchema), // ✅ validación personalizada
     async (c) => {
         const bodyValidated = c.get('validatedBody'); // ya está validado
-        const { status, body } = await ActorController.add(bodyValidated);
+        const { status, body } = await ActorController.create(bodyValidated);
         return new Response(JSON.stringify(body), {
             status: status,
             headers: { 'Content-Type': 'application/json' }
         });
     }
 );
+// Actualizar un actor
+actorRouter.put('/:id', validateBody(actorSchema.partial()), async (c) => {
+    const id = Number(c.req.param('id'));
+    const validatedData = c.get('validatedBody');
+    const { status, body } = await ActorController.update(id, validatedData);
+    return new Response(JSON.stringify(body), {
+        status: status,
+        headers: { 'Content-Type': 'application/json' }
+    });
+});
+
+// Eliminar un actor
+actorRouter.delete('/:id', async (c) => {
+    const id = Number(c.req.param('id'));
+    const { status, body } = await ActorController.delete(id);
+    return new Response(JSON.stringify(body), {
+        status: status,
+        headers: { 'Content-Type': 'application/json' }
+    });
+});
 
 export default actorRouter;
