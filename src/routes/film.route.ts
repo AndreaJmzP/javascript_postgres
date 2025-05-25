@@ -24,9 +24,14 @@ FilmRouter.get('/films/:id', async (c) => {
 
 FilmRouter.post(
     '/films',
-    validateBody(filmSchema), // ✅ validación personalizada
+    validateBody(filmSchema),
     async (c) => {
-        const bodyValidated = c.get('validatedBody'); // ya está validado
+        const bodyValidated = c.get('validateBody') as {
+            title: string;
+            description: string;
+            release_year: string;
+        }; // Aserción de tipo
+
         const { status, body } = await filmController.add(bodyValidated);
         return new Response(JSON.stringify(body), {
             status: status,
