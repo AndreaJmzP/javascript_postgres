@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import actorRouter from './src/routes/actor.route';
 import { errorHandler } from './src/middlewares/error_handler.ts';
-import filmRoute from './src/routes/film.route.ts';
+import filmRouter from './src/routes/film.route.ts';
 
 const app = new Hono();
 

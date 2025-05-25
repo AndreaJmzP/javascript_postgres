@@ -1,4 +1,4 @@
-import { pgTable, serial,  varchar } from 'drizzle-orm/pg-core';
+import {integer,text,numeric, pgTable, serial, varchar} from 'drizzle-orm/pg-core';
 import {release} from "node:os";
 import {number} from "zod";
 import {kMaxLength} from "node:buffer";
@@ -14,7 +14,13 @@ export const films =pgTable('film',{
     title: varchar('title',{length:255}),
     description: varchar('description',{length:500}),
     release_year: integer('release_year'),
-    language_id: integer('language_id')
+    rental_duration: integer('rental_duration'),
+    rental_rate: numeric('rental_rate', { precision: 4, scale: 2 }),
+    length: integer('length'),
+    replacement_cost: numeric('replacement_cost', { precision: 5, scale: 2 }),
+    rating: varchar('rating', { length: 10 }),
+    fulltext: text('fulltext'),
+
 });
 
 

@@ -1,11 +1,11 @@
-import { filmService } from '../services/film.service.ts';
+import { FilmService } from '../services/film.service.ts';
 import {HttpResponse} from "../utils/http_reponse.ts";
 
 
 export const filmController = {
     getAll: async () => {
         try {
-            const actors = await filmService.getAll();
+            const actors = await FilmService.getAll();
             return HttpResponse.ok(actors, "Películas recuperados correctamente");
         } catch (error) {
             return HttpResponse.error("Error al recuperar los actores");
@@ -14,7 +14,7 @@ export const filmController = {
 
     getById: async (id: number) => {
         try {
-            const film = await filmService.getById(id)
+            const film = await FilmService.getById(id)
             if (!film) {
                 return HttpResponse.notFound("Actor no encontrado");
             }
@@ -26,7 +26,7 @@ export const filmController = {
 
     add: async (body: { title: string; description: string, release_year: string }) => {
         try {
-            const newFilm = await filmService.add(body.title, body.description);
+            const newFilm = await FilmService.add(body.title, body.description);
             return HttpResponse.created(newFilm, "Película creado");
         } catch (error) {
             return HttpResponse.error("Error al crear la película");

@@ -5,7 +5,7 @@ import { validateBody } from '../middlewares/validate.ts'; // este es el nuevo m
 
 const FilmRouter = new Hono();
 
-filmRouter.get('/films', async (): Promise<Response> => {
+FilmRouter.get('/films', async (): Promise<Response> => {
     const { status, body } = await filmController.getAll();
     return new Response(JSON.stringify(body), {
         status: status,
@@ -13,7 +13,7 @@ filmRouter.get('/films', async (): Promise<Response> => {
     });
 });
 
-filmRouter.get('/films/:id', async (c) => {
+FilmRouter.get('/films/:id', async (c) => {
     const id = Number(c.req.param('id'));
     const { status, body } = await filmController.getById(id);
     return new Response(JSON.stringify(body), {
@@ -22,7 +22,7 @@ filmRouter.get('/films/:id', async (c) => {
     });
 });
 
-filmRouter.post(
+FilmRouter.post(
     '/films',
     validateBody(filmSchema), // ✅ validación personalizada
     async (c) => {
@@ -35,4 +35,4 @@ filmRouter.post(
     }
 );
 
-export default filmRouter;
+export default FilmRouter;
