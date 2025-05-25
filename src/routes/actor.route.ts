@@ -27,7 +27,7 @@ actorRouter.post(
     validateBody(actorSchema), // ✅ validación personalizada
     async (c) => {
         const bodyValidated = c.get('validatedBody'); // ya está validado
-        const { status, body } = await ActorController.create(bodyValidated);
+        const { status, body } = await ActorController.add(bodyValidated);
         return new Response(JSON.stringify(body), {
             status: status,
             headers: { 'Content-Type': 'application/json' }

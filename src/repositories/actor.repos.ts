@@ -17,7 +17,7 @@ export const ActorRepository = {
         return actor || null;
     },
 
-    create: async (data: { first_name: string; last_name: string }) => {
+    add: async (data: { first_name: string; last_name: string }) => {
         const [newActor] = await db
             .insert(actors)
             .values(data)

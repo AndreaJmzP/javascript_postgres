@@ -30,8 +30,7 @@ FilmRouter.post(
             title: string;
             description: string;
             release_year: string;
-        }; // Aserción de tipo
-
+        };
         const { status, body } = await filmController.add(bodyValidated);
         return new Response(JSON.stringify(body), {
             status: status,
@@ -39,5 +38,19 @@ FilmRouter.post(
         });
     }
 );
+// Actualizar película
+FilmRouter.put('/:id', validateBody(filmSchema.partial()), async (c) => {
+    const id = Number(c.req.param('id'));
+    const body = c.get('validatedBody');
+    const { status: status, body: responseBody } = await filmController.update(id, body);
+    return c.json(responseBody, status);
+});
+
+// Eliminar película
+FilmRouter.delete('/:id', async (c) => {
+    const id = Number(c.req.param('id'));
+    const { status: status, body } = await filmController.delete(id);
+    return c.json(body, status);
+});
 
 export default FilmRouter;

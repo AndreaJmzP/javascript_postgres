@@ -1,4 +1,4 @@
-// src/controllers/actor.controller.ts
+
 import { ActorRepository } from '../repositories/actor.repos.ts';
 import {HttpResponse} from "../utils/http_reponse.ts";
 
@@ -22,9 +22,9 @@ export const ActorController = {
         }
     },
 
-    create: async (data: { first_name: string; last_name: string }) => {
+    add: async (data: { first_name: string; last_name: string }) => {
         try {
-            const actor = await ActorRepository.create(data);
+            const actor = await ActorRepository.add(data);
             return HttpResponse.created(actor);
         } catch (error) {
             return HttpResponse.error('Actor no creado');
