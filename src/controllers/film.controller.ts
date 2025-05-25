@@ -33,9 +33,9 @@ export const filmController = {
     },
 
     // Actualizar película
-    update: async (id: number, body: { title?: string; description?: string, release_year?: string }) => {
+    update: async (id: number, title:string) => {
         try {
-            const updatedFilm = await FilmService.update(id,body);
+            const updatedFilm = await FilmService.update(id,title);
             if (!updatedFilm) {
                 return HttpResponse.notFound("Película no encontrada");
             }
