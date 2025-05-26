@@ -1,7 +1,9 @@
 import { Hono } from 'hono';
 import { filmSchema } from '../schemas/film_schema.ts';
 import { filmController } from '../controllers/film.controller.ts';
-import { validateBody } from '../middlewares/validate.ts'; // este es el nuevo middleware
+import { validateBody } from '../middlewares/validate.ts';
+
+// este es el nuevo middleware
 
 const FilmRouter = new Hono();
 
@@ -42,7 +44,7 @@ FilmRouter.post(
 FilmRouter.put('/:id', validateBody(filmSchema.partial()), async (c) => {
     const id = Number(c.req.param('id'));
     const body = c.get('validatedBody');
-    const { status: status, body: responseBody } = await filmController.update(id, body);
+    const { status: Number, body: responseBody } = await filmController.update(id, body);
     return c.json(responseBody, status);
 });
 

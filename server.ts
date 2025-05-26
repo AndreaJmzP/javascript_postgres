@@ -1,8 +1,9 @@
+import { serve } from 'bun'
 import { config } from 'dotenv';
-config();
-import { serve } from 'bun';
-import app from './app';
 
+config();
+import app from './app';
+//config();
 const PORT = process.env.PORT || 3000;
 
 console.log(`🚀 Servidor escuchando en http://localhost:${PORT}`);
