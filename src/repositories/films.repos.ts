@@ -1,8 +1,8 @@
-import { db } from '../db/index.ts';
-import { films } from '../db/schema.ts';
-import { eq } from "drizzle-orm/sql/expressions/conditions";
+import { db } from '../db/index';
+import { films } from '../db/schema';
+import { eq } from "drizzle-orm";
 
-export const filmsRepos = {
+export const filmsrepos = {
     findAll: async () => db.select().from(films),
     findById: async (id: number) => {
         const [film] = await db

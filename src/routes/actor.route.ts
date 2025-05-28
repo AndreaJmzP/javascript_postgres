@@ -35,7 +35,7 @@ actorRouter.post(
     }
 );
 // Actualizar un actor
-actorRouter.put('/:id', validateBody(actorSchema.partial()), async (c) => {
+actorRouter.put('/actors/:id', validateBody(actorSchema.partial()), async (c) => {
     const id = Number(c.req.param('id'));
     const validatedData = c.get('validatedBody');
     const { status, body } = await ActorController.update(id, validatedData);
@@ -46,7 +46,7 @@ actorRouter.put('/:id', validateBody(actorSchema.partial()), async (c) => {
 });
 
 // Eliminar un actor
-actorRouter.delete('/:id', async (c) => {
+actorRouter.delete('/actors/:id', async (c) => {
     const id = Number(c.req.param('id'));
     const { status, body } = await ActorController.delete(id);
     return new Response(JSON.stringify(body), {

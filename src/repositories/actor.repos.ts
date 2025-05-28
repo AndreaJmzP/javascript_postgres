@@ -2,7 +2,6 @@
 import { db } from '../db/index.ts';
 import { actors } from '../db/schema.ts';
 import { eq } from "drizzle-orm";
-import { type Actor } from '../schemas/actor_schema.ts';
 
 export const ActorRepository = {
     findAll: async () => {
