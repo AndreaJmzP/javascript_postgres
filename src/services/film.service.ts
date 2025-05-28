@@ -3,7 +3,7 @@ import { filmsRepos } from "../repositories/films.repos.ts";
 export const FilmService = {
     getAll: () => filmsRepos.findAll(),
     getById: (id: number) => filmsRepos.findById(id),
-    add: (data: {title: string, description: string }) => filmsRepos.add(data),
+    add: (data: {title: string, description: string,release_year:number,language_id:number }) => filmsRepos.add(data),
     // Actualizar película
     /*update: async (id: number, title:string ) => {
         const [updatedFilm] = await db.update(films)

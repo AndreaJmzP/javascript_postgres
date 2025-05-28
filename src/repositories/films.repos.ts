@@ -13,14 +13,14 @@ export const filmsRepos  = {
             .where(eq(films.film_id, id));
         return film;
     },
-    add: async (data: { title: string; description: string }) => {
+    add: async (data: { title: string; description: string ,release_year:number,language_id:number}) => {
         const [newFilm] = await db.insert(films).
             values(data).
             returning();
             return newFilm;
     },
     // Actualizar película (PATCH/PUT)
-    update: async (id: number, data: Partial<{ title: string; description: string }>) => {
+    update: async (id: number, data: Partial<{ title: string; description: string,release_year:number,language_id:number }>) => {
         const [updatedFilm] = await db
             .update(films)
             .set(data)

@@ -35,6 +35,7 @@ FilmRouter.post(
         });
     }
 );
+
 // Actualizar película
 FilmRouter.put('/:id', validateBody(filmSchema.partial()), async (c) => {
     const id = Number(c.req.param('id'));

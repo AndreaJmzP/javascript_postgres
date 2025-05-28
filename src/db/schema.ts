@@ -14,6 +14,7 @@ export const films =pgTable('film',{
     title: varchar('title',{length:255}),
     description: varchar('description',{length:500}),
     release_year: integer('release_year'),
+    language_id: integer('language_id'),
     rental_duration: integer('rental_duration'),
     rental_rate: numeric('rental_rate', { precision: 4, scale: 2 }),
     length: integer('length'),

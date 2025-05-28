@@ -24,7 +24,7 @@ export const filmController = {
         }
     },
 
-    add: async (data: { title: string; description: string }) => {
+    add: async (data: { title: string; description: string ,release_year:number,language:number}) => {
         try {
             const newFilm = await filmsRepos.add(data);
             return HttpResponse.created(newFilm);
@@ -33,7 +33,7 @@ export const filmController = {
         }
     },
     // Actualizar película
-    update: async (id: number, data: Partial<{ title: string; description: string }>) => {
+    update: async (id: number, data: Partial<{ title: string; description: string ,release_year:number,language:number}>) => {
         try {
             const updatedFilm = await filmsRepos.update(id,data);
             if (!updatedFilm) {
