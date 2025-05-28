@@ -2,7 +2,7 @@ import { db } from '../db/index';
 import { films } from '../db/schema';
 import { eq } from "drizzle-orm";
 
-export const filmsrepos = {
+export const filmsRepos  = {
     findAll: async () => db.select().from(films),
     findById: async (id: number) => {
         const [film] = await db
