@@ -1,10 +1,11 @@
-import { FilmService } from '../services/film.service.ts';
+
 import { HttpResponse } from "../utils/http_reponse.ts";
+import {filmsRepos} from "../repositories/films.repos.ts";
 
 export const filmController = {
     getAll: async () => {
         try {
-            const films = await FilmService.getAll();
+            const films = await filmsRepos.findAll();
             return HttpResponse.ok(films, "Películas recuperadas correctamente");
         } catch (error) {
             return HttpResponse.error("Error al recuperar las películas");
@@ -13,7 +14,7 @@ export const filmController = {
 
     getById: async (id: number) => {
         try {
-            const film = await FilmService.getById(id);
+            const film = await filmsRepos.findById(id);
             if (!film) {
                 return HttpResponse.notFound("Película no encontrada");
             }
@@ -23,19 +24,18 @@ export const filmController = {
         }
     },
 
-    add: async (body: { title: string; description: string }) => {
+    add: async (data: { title: string; description: string }) => {
         try {
-            const newFilm = await FilmService.add(body.title, body.description);
-            return HttpResponse.created(newFilm, "Película creada");
+            const newFilm = await filmsRepos.add(data);
+            return HttpResponse.created(newFilm);
         } catch (error) {
             return HttpResponse.error("Error al crear la película");
         }
     },
-
     // Actualizar película
-    update: async (id: number, title:string) => {
+    update: async (id: number, data: Partial<{ title: string; description: string }>) => {
         try {
-            const updatedFilm = await FilmService.update(id,title);
+            const updatedFilm = await filmsRepos.update(id,data);
             if (!updatedFilm) {
                 return HttpResponse.notFound("Película no encontrada");
             }
@@ -44,11 +44,10 @@ export const filmController = {
             return HttpResponse.error("Error al actualizar la película");
         }
     },
-
     // Eliminar película
     delete: async (id: number) => {
         try {
-            const deletedFilm = await FilmService.delete(id);
+            const deletedFilm = await filmsRepos.delete(id);
             if (!deletedFilm) {
                 return HttpResponse.notFound("Película no encontrada");
             }

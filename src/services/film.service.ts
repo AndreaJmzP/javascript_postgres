@@ -1,15 +1,11 @@
-import { db } from "../db";
-import { films } from "../db/schema.ts";
-import { eq } from "drizzle-orm";
 import { filmsRepos } from "../repositories/films.repos.ts";
 
 export const FilmService = {
     getAll: () => filmsRepos.findAll(),
     getById: (id: number) => filmsRepos.findById(id),
-    add: (title: string, description: string) =>
-        filmsRepos.add({ title, description}),
+    add: (data: {title: string, description: string }) => filmsRepos.add(data),
     // Actualizar película
-    update: async (id: number, title:string ) => {
+    /*update: async (id: number, title:string ) => {
         const [updatedFilm] = await db.update(films)
             .set(title)
             .where(eq(films.film_id, id))
@@ -22,5 +18,5 @@ export const FilmService = {
             .where(eq(films.film_id, id))
             .returning();
         return deletedFilm;
-    },
+    },*/
 };

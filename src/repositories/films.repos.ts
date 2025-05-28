@@ -1,9 +1,11 @@
 import { db } from '../db/index';
-import { films } from '../db/schema';
+import {films} from '../db/schema';
 import { eq } from "drizzle-orm";
 
 export const filmsRepos  = {
-    findAll: async () => db.select().from(films),
+    findAll: async () => {
+        return await db.select().from(films)
+    },
     findById: async (id: number) => {
         const [film] = await db
             .select()
@@ -11,11 +13,14 @@ export const filmsRepos  = {
             .where(eq(films.film_id, id));
         return film;
     },
-    add: async (data: { title: string; description: string }) =>{
-        db.insert(films).values(data).returning();
+    add: async (data: { title: string; description: string }) => {
+        const [newFilm] = await db.insert(films).
+            values(data).
+            returning();
+            return newFilm;
     },
     // Actualizar película (PATCH/PUT)
-    update: async (id: number, data: { title: string; description: string }) => {
+    update: async (id: number, data: Partial<{ title: string; description: string }>) => {
         const [updatedFilm] = await db
             .update(films)
             .set(data)
@@ -23,7 +28,6 @@ export const filmsRepos  = {
             .returning();
         return updatedFilm || null;
     },
-
     // Eliminar película
     delete: async (id: number) => {
         const [deletedFilm] = await db
