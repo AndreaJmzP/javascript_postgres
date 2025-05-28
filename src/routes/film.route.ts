@@ -37,7 +37,7 @@ FilmRouter.post(
 );
 
 // Actualizar película
-FilmRouter.put('/:id', validateBody(filmSchema.partial()), async (c) => {
+FilmRouter.put('/films/:id', validateBody(filmSchema.partial()), async (c) => {
     const id = Number(c.req.param('id'));
     const body = c.get('validatedBody');
     const { status:status, body: responseBody } = await filmController.update(id, body);
@@ -45,7 +45,7 @@ FilmRouter.put('/:id', validateBody(filmSchema.partial()), async (c) => {
 });
 
 // Eliminar película
-FilmRouter.delete('/:id', async (c) => {
+FilmRouter.delete('/films/:id', async (c) => {
     const id = Number(c.req.param('id'));
     const { status: status, body } = await filmController.delete(id);
     return c.json(body, status);
