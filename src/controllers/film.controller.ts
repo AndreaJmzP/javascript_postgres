@@ -24,11 +24,14 @@ export const filmController = {
         }
     },
 
-    add: async (data: { title: string; description: string ,release_year:number,language_id:number}) => {
+    add: async (data: { title: string; description: string, release_year:number, language_id:number }) => {
         try {
+            console.log("Datos recibidos:", data); // ← Agrega esto
             const newFilm = await filmsRepos.add(data);
+            console.log("Película creada:", newFilm); // ← Y esto
             return HttpResponse.created(newFilm);
         } catch (error) {
+            console.error("Error al crear película:", error); // ← Esto es crucial
             return HttpResponse.error("Error al crear la película");
         }
     },

@@ -6,4 +6,3 @@ export const filmSchema = z.object({
     release_year: z.number(),
     language_id:z.number(),
 });
-export type film = z.infer<typeof filmSchema>;
