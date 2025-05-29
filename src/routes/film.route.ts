@@ -29,7 +29,8 @@ FilmRouter.post(
     '/films',
     validateBody(filmSchema),
     async (c) => {
-        const bodyValidated = c.get('validateBody');
+       const bodyValidated = c.get('validatedBody');
+
         const { status, body } = await filmController.add(bodyValidated);
         return new Response(JSON.stringify(body), {
             status: status,

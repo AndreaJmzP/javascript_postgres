@@ -6,6 +6,7 @@ export const validateBody = (schema: ZodSchema): MiddlewareHandler => {
     return async (c, next) => {
         try {
             const body = await c.req.json();
+
             const parsed = schema.safeParse(body);
 
             if (!parsed.success) {
